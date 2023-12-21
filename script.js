@@ -76,6 +76,7 @@ generateTable()
 const openModalBtn = document.querySelector("#open-modal-btn")
 const addBookBtn = document.querySelector("#add-book-btn")
 const modal = document.querySelector("dialog")
+const closeModalBtn = document.querySelector("#close-modal-btn")
 
 function handleOpenModal(e) {
   e.preventDefault();
@@ -85,8 +86,15 @@ function handleOpenModal(e) {
 openModalBtn.addEventListener("click", (e) => handleOpenModal(e))
 form.addEventListener("submit", (e) => addBookToLibrary(e))
 addBookBtn.addEventListener("click", (e) => handleAddBookBtn())
+closeModalBtn.addEventListener("click", (e) => handleCloseModal(3))
+
 
 function handleAddBookBtn() {
   modal.close()
   console.log("hola")
+}
+
+function handleCloseModal(e) {
+  e.preventDefault
+  modal.close()
 }
