@@ -13,12 +13,10 @@
 
 <body>
   <h1>The Odin Project Book library</h1>
-  <form action="">
-    <button id="open-modal-btn">Agregar libro</button>
-  </form>
+  <button id="open-modal-btn">Agregar libro</button>
   <dialog>
     <form action="" class="flex flex-col gap-2">
-      <label class="flex flex-col" >
+      <label class="flex flex-col">
         Título
         <input type="text" id="title" name="title">
       </label>
@@ -35,9 +33,9 @@
         <input type="checkbox" id="isRead" name="isRead">
       </label>
       <div class="flex flex-end gap-2">
-        <button>Cerrar</button>
-        <button id="add-book-btn">Añadir</button>
       </div>
+      <button>Cerrar</button>
+      <button id="add-book-btn">Añadir</button>
     </form>
   </dialog>
   <table>
