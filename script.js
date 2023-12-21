@@ -20,8 +20,10 @@ Book.prototype.delete = function() {
   console.log(myLibrary.findIndex(book => book.author === this.author))
   myLibrary.splice(myLibrary.findIndex(book => book.author === this.author), 1)
   console.log(myLibrary)
+  const rowToDelete = document.querySelector(`tr[data-book=${this.title.split(" ").join("") + this.pages}]`)
+  console.log(`tr[data-book=${this.title.split(" ").join("") + this.pages}]`)
+  rowToDelete.remove()
   generateTable()
-  // myLibrary.slice(myLibrary.findIndex(author === this.author))
 }
 data.map(book => {
   myLibrary.push(new Book (book.title, book.author, book.pages, book.isRead))
