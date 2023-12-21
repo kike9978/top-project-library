@@ -17,25 +17,27 @@
     <button id="open-modal-btn">Agregar libro</button>
   </form>
   <dialog>
-    <form action="">
-      <label>
+    <form action="" class="flex flex-col gap-2">
+      <label class="flex flex-col" >
         Título
-        <input type="text">
+        <input type="text" id="title" name="title">
       </label>
-      <label>
+      <label class="flex flex-col">
         Autor
-        <input type="text">
+        <input type="text" id="author" name="author">
       </label>
-      <label>
+      <label class="flex flex-col">
         Páginas
-        <input type="number">
+        <input type="number" id="pages" name="pages">
       </label>
-      <label>
-        Estado de lectura
-        <input type="checkbox">
+      <label class="flex gap-2">
+        Leído
+        <input type="checkbox" id="isRead" name="isRead">
       </label>
-      <button>Cerrar</button>
-      <button id="add-book-btn">Añadir</button>
+      <div class="flex flex-end gap-2">
+        <button>Cerrar</button>
+        <button id="add-book-btn">Añadir</button>
+      </div>
     </form>
   </dialog>
   <table>

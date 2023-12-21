@@ -14,11 +14,12 @@ function Book(title, author, pages, isRead) {
 }
 
 const form = document.querySelector("form")
+
 function addBookToLibrary(e) {
-e.preventDefault()
-const formData = new FormData(form, addBookBtnBtn)
-modal.close();
-console.log(formData)
+  e.preventDefault()
+  const formData = new FormData(form)
+  modal.close();
+  console.log(formData)
 }
 
 
@@ -44,13 +45,13 @@ myLibrary.forEach(book => {
 })
 
 const openModalBtn = document.querySelector("#open-modal-btn")
-const addBookBtnBtn = document.querySelector("#add-book-btn")
+const addBookBtn = document.querySelector("#add-book-btn")
 const modal = document.querySelector("dialog")
 
-function handleOpenModal(e){
+function handleOpenModal(e) {
   e.preventDefault();
   modal.showModal();
 }
 
 openModalBtn.addEventListener("click", (e) => handleOpenModal(e))
-addBookBtnBtn.addEventListener("click", (e) => addBookToLibrary(e))
+addBookBtn.addEventListener("submit", (e) => addBookToLibrary(e))

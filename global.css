@@ -1,0 +1,14 @@
+.flex {
+  display: flex;
+}
+
+.flex-end {
+  justify-content: end;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+.gap-2{
+  gap:.75rem
+}
