@@ -16,12 +16,14 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead
 }
 
-Book.prototype.delete = function() {
+Book.prototype.delete = function(e) {
+  const bookID = e.target.parentNode.getAttribute("data-book")
+  console.log(e)
   console.log(myLibrary.findIndex(book => book.author === this.author))
   myLibrary.splice(myLibrary.findIndex(book => book.author === this.author), 1)
   console.log(myLibrary)
-  const rowToDelete = document.querySelector(`tr[data-book=${this.title.split(" ").join("") + this.pages}]`)
-  console.log(`tr[data-book=${this.title.split(" ").join("") + this.pages}]`)
+  const rowToDelete = document.querySelector(`tr[data-book=${bookID}]`)
+  console.log(bookID)
   rowToDelete.remove()
   generateTable()
 }
@@ -42,7 +44,9 @@ function addBookToLibrary(e) {
   generateTable()
 }
 
-
+function generateRow(){
+  
+}
 
 const tbody = document.querySelector("tbody")
 
@@ -54,6 +58,7 @@ function generateTable() {
     const tr = document.createElement("tr")
     const deleteBtn = document.createElement("button")
     deleteBtn.innerText = "Eliminar";
+    deleteBtn.addEventListener("click", (e) => Book.prototype.delete(e))
     tr.setAttribute("data-book", book.title.split(" ").join("") + book.pages)
     const cellTitle = document.createElement("td")
     const cellAuthor = document.createElement("td")
@@ -82,6 +87,7 @@ const closeModalBtn = document.querySelector("#close-modal-btn")
 
 function handleOpenModal(e) {
   e.preventDefault();
+  form.reset()
   modal.showModal();
 }
 
