@@ -6,7 +6,7 @@ const data = [
   { title: "Como cautivar", author: " L Zavaleta", pages: 430, isRead: false },
 ];
 
-const myLibrary =[]
+const myLibrary = []
 
 
 function Book(title, author, pages, isRead) {
@@ -16,7 +16,7 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead
 }
 
-Book.prototype.delete = function(e) {
+Book.prototype.delete = function (e) {
   const bookID = e.target.parentNode.getAttribute("data-book")
   console.log(e)
   console.log(myLibrary.findIndex(book => book.author === this.author))
@@ -25,10 +25,20 @@ Book.prototype.delete = function(e) {
   const rowToDelete = document.querySelector(`tr[data-book=${bookID}]`)
   console.log(bookID)
   rowToDelete.remove()
-  generateTable()
 }
+Book.prototype.changeReadStatus = function (e) {
+  const bookID = e.target.parentNode.getAttribute("data-book")
+  const arrayIndex = myLibrary.findIndex(book => {return formatBookID(book) === bookID})
+  let readStatus = myLibrary[arrayIndex].isRead
+  myLibrary[arrayIndex].isRead = !readStatus
+  readStatus = myLibrary[arrayIndex].isRead
+  const cellToEdit = document.querySelector(`tr[data-book=${bookID}] td[data-cell=isRead]`)
+  cellToEdit.innerText = readStatus ? "Leído" : "No leído"
+}
+
+
 data.map(book => {
-  myLibrary.push(new Book (book.title, book.author, book.pages, book.isRead))
+  myLibrary.push(new Book(book.title, book.author, book.pages, book.isRead))
 })
 
 const form = document.querySelector("form")
@@ -44,8 +54,8 @@ function addBookToLibrary(e) {
   generateTable()
 }
 
-function generateRow(){
-  
+function generateRow() {
+
 }
 
 const tbody = document.querySelector("tbody")
@@ -56,14 +66,26 @@ function generateTable() {
   myLibrary.forEach(book => {
 
     const tr = document.createElement("tr")
+
+    const readStatusBtn = document.createElement("button")
+    readStatusBtn.innerText = "Cambiar estatus de leído";
+    readStatusBtn.addEventListener("click", e => Book.prototype.changeReadStatus(e))
+    const editBtn = document.createElement("button")
+    editBtn.innerText = "Editar";
+    editBtn.addEventListener("click", e => {
+      handleOpenModal(e);
+    })
+
     const deleteBtn = document.createElement("button")
     deleteBtn.innerText = "Eliminar";
     deleteBtn.addEventListener("click", (e) => Book.prototype.delete(e))
-    tr.setAttribute("data-book", book.title.split(" ").join("") + book.pages)
+
+    tr.setAttribute("data-book", formatBookID(book))
     const cellTitle = document.createElement("td")
     const cellAuthor = document.createElement("td")
     const cellPages = document.createElement("td")
     const cellIsRead = document.createElement("td")
+    cellIsRead.setAttribute("data-cell", "isRead")
     cellTitle.innerText = book.title;
     cellAuthor.innerText = book.author;
     cellPages.innerText = book.pages;
@@ -72,10 +94,15 @@ function generateTable() {
     tr.appendChild(cellAuthor)
     tr.appendChild(cellPages)
     tr.appendChild(cellIsRead)
+    tr.appendChild(readStatusBtn)
+    tr.appendChild(editBtn)
     tr.appendChild(deleteBtn)
 
     tbody.appendChild(tr)
   })
+}
+function formatBookID(book) {
+  return book.title.split(" ").join("") + book.pages
 }
 
 generateTable()
@@ -94,7 +121,7 @@ function handleOpenModal(e) {
 openModalBtn.addEventListener("click", (e) => handleOpenModal(e))
 form.addEventListener("submit", (e) => addBookToLibrary(e))
 addBookBtn.addEventListener("click", (e) => handleAddBookBtn())
-closeModalBtn.addEventListener("click", (e) => handleCloseModal(3))
+closeModalBtn.addEventListener("click", (e) => handleCloseModal(e))
 
 
 function handleAddBookBtn() {

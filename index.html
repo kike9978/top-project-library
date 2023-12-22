@@ -16,6 +16,7 @@
   <button id="open-modal-btn">Agregar libro</button>
   <dialog>
     <form action="" class="flex flex-col gap-2">
+      <h3>Agregar nuevo libro</h3>
       <label class="flex flex-col">
         Título
         <input type="text" id="title" name="title">
@@ -33,9 +34,10 @@
         <input type="checkbox" id="isRead" name="isRead">
       </label>
       <div class="flex flex-end gap-2">
+        <button id="close-modal-btn" type="button">Cancelar</button>
+        <button id="add-book-btn">Añadir</button>
+        <button id="save-book-btn" class="display-none">Guardar</button>
       </div>
-      <button id="close-modal-btn" type="button">Cerrar</button>
-      <button id="add-book-btn">Añadir</button>
     </form>
   </dialog>
   <table>

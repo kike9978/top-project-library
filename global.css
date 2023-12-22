@@ -12,3 +12,11 @@
 .gap-2{
   gap:.75rem
 }
+
+dialog {
+  min-width: 400px;
+}
+
+.display-none{
+  display: none;
+}
