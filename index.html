@@ -19,15 +19,15 @@
       <h3>Agregar nuevo libro</h3>
       <label class="flex flex-col">
         Título
-        <input type="text" id="title" name="title">
+        <input type="text" id="title" name="title" required>
       </label>
       <label class="flex flex-col">
         Autor
-        <input type="text" id="author" name="author">
+        <input type="text" id="author" name="author" required>
       </label>
       <label class="flex flex-col">
         Páginas
-        <input type="number" id="pages" name="pages">
+        <input type="number" id="pages" name="pages" required>
       </label>
       <label class="flex gap-2">
         Leído
@@ -35,7 +35,7 @@
       </label>
       <div class="flex flex-end gap-2">
         <button id="close-modal-btn" type="button">Cancelar</button>
-        <button id="add-book-btn">Añadir</button>
+        <button type="submit" id="add-book-btn">Añadir</button>
         <button id="save-book-btn" class="display-none">Guardar</button>
       </div>
     </form>
