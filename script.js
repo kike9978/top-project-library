@@ -9,33 +9,37 @@ const data = [
 const myLibrary = []
 
 
-function Book(title, author, pages, isRead) {
-  this.title = title
-  this.author = author
-  this.pages = pages
-  this.isRead = isRead
-}
 
-Book.prototype.delete = function (e) {
-  const bookID = e.target.parentNode.getAttribute("data-book")
-  console.log(e)
-  console.log(myLibrary.findIndex(book => book.author === this.author))
-  myLibrary.splice(myLibrary.findIndex(book => book.author === this.author), 1)
-  console.log(myLibrary)
-  const rowToDelete = document.querySelector(`tr[data-book=${bookID}]`)
-  console.log(bookID)
-  rowToDelete.remove()
-}
-Book.prototype.changeReadStatus = function (e) {
-  const bookID = e.target.parentNode.getAttribute("data-book")
-  const arrayIndex = myLibrary.findIndex(book => {return formatBookID(book) === bookID})
-  let readStatus = myLibrary[arrayIndex].isRead
-  myLibrary[arrayIndex].isRead = !readStatus
-  readStatus = myLibrary[arrayIndex].isRead
-  const cellToEdit = document.querySelector(`tr[data-book=${bookID}] td[data-cell=isRead]`)
-  cellToEdit.innerText = readStatus ? "Leído" : "No leído"
-}
+class Book {
+  constructor(title, author, pages, isRead) {
+    this.title = title
+    this.author = author
+    this.pages = pages
+    this.isRead = isRead
+  }
 
+  delete(e) {
+    const bookID = e.target.parentNode.getAttribute("data-book")
+    console.log(e)
+    console.log(myLibrary.findIndex(book => book.author === this.author))
+    myLibrary.splice(myLibrary.findIndex(book => book.author === this.author), 1)
+    console.log(myLibrary)
+    const rowToDelete = document.querySelector(`tr[data-book=${bookID}]`)
+    console.log(bookID)
+    rowToDelete.remove()
+  }
+
+  changeReadStatus(e) {
+    const bookID = e.target.parentNode.getAttribute("data-book")
+    const arrayIndex = myLibrary.findIndex(book => { return formatBookID(book) === bookID })
+    let readStatus = myLibrary[arrayIndex].isRead
+    myLibrary[arrayIndex].isRead = !readStatus
+    readStatus = myLibrary[arrayIndex].isReadd
+    const cellToEdit = document.querySelector(`tr[data-book=${bookID}] td[data-cell=isRead]`)
+    cellToEdit.innerText = readStatus ? "Leído" : "No leído"
+  }
+
+}
 
 data.map(book => {
   myLibrary.push(new Book(book.title, book.author, book.pages, book.isRead))
