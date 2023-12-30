@@ -17,24 +17,24 @@ class Book {
   }
 
   delete(e) {
-    const bookID = e.target.parentNode.getAttribute("data-book")
+    const bookID = e.target.parentNode.parentNode.getAttribute("data-book")
     console.log(e)
     console.log(Library.myLibrary.findIndex(book => book.author === this.author))
     Library.myLibrary.splice(Library.myLibrary.findIndex(book => book.author === this.author), 1)
     console.log(Library.myLibrary)
-    const rowToDelete = document.querySelector(`tr[data-book=${bookID}]`)
+    const rowToDelete = document.querySelector(`article[data-book=${bookID}]`)
     console.log(bookID)
     rowToDelete.remove()
   }
 
   changeReadStatus(e) {
-    const bookID = e.target.parentNode.getAttribute("data-book")
+    const bookID = e.target.parentNode.parentNode.getAttribute("data-book")
     const arrayIndex = Library.myLibrary.findIndex(book => { return formatBookID(book) === bookID })
     let readStatus = Library.myLibrary[arrayIndex].isRead
     Library.myLibrary[arrayIndex].isRead = !readStatus
     readStatus = Library.myLibrary[arrayIndex].isRead
-    const cellToEdit = document.querySelector(`tr[data-book=${bookID}] td[data-cell=isRead]`)
-    cellToEdit.innerText = readStatus ? "Leído" : "No leído"
+    const cardToEdit = document.querySelector(`article[data-book=${bookID}] p[data-book=isRead]`)
+    cardToEdit.innerText = readStatus ? "Leído ✅" : "No leído ❌"
   }
 
 }
@@ -49,63 +49,78 @@ class Library {
 
   static addBookToLibrary(e) {
     e.preventDefault()
-    const formData = new FormData(form)
-    modal.close();
-    const entries = Object.fromEntries(formData)
-    console.log(entries)
-    const book = new Book(entries.title, entries.author, entries.pages, entries.isRead)
-    Library.myLibrary.push(book)
-    UIRenderer.generateTable()
+    const form = e.target
+
+    if (form.checkValidity()) {
+      const formData = new FormData(form)
+      modal.close();
+      const entries = Object.fromEntries(formData)
+      console.log(entries)
+      const book = new Book(entries.title, entries.author, entries.pages, entries.isRead)
+      Library.myLibrary.push(book)
+      UIRenderer.generateCardGrid()
+
+    } else {
+      console.log('Form is invalid. Please fill in all required fields.');
+    }
   }
 }
 
 Library.generateLibrary()
 
 const form = document.querySelector("form")
-
-const tbody = document.querySelector("tbody")
+const cardSection = document.querySelector(".card-grid")
 
 class UIRenderer {
-  static generateTable() {
-    tbody.innerHTML = ""
+
+  static generateCardGrid() {
+    cardSection.innerHTML = ""
 
     Library.myLibrary.forEach(book => {
-
-      const tr = document.createElement("tr")
-
-      const readStatusBtn = document.createElement("button")
-      readStatusBtn.innerText = "Cambiar estatus de leído";
-      readStatusBtn.addEventListener("click", e => Book.prototype.changeReadStatus(e))
-      const editBtn = document.createElement("button")
-      editBtn.innerText = "Editar";
-      editBtn.addEventListener("click", e => {
-        UIRenderer.handleOpenModal(e);
-      })
-
-      const deleteBtn = document.createElement("button")
-      deleteBtn.innerText = "Eliminar";
-      deleteBtn.addEventListener("click", (e) => Book.prototype.delete(e))
-
-      tr.setAttribute("data-book", formatBookID(book))
-      const cellTitle = document.createElement("td")
-      const cellAuthor = document.createElement("td")
-      const cellPages = document.createElement("td")
-      const cellIsRead = document.createElement("td")
-      cellIsRead.setAttribute("data-cell", "isRead")
-      cellTitle.innerText = book.title;
-      cellAuthor.innerText = book.author;
-      cellPages.innerText = book.pages;
-      cellIsRead.innerText = book.isRead ? "Leído" : "No leído";
-      tr.appendChild(cellTitle)
-      tr.appendChild(cellAuthor)
-      tr.appendChild(cellPages)
-      tr.appendChild(cellIsRead)
-      tr.appendChild(readStatusBtn)
-      tr.appendChild(editBtn)
-      tr.appendChild(deleteBtn)
-
-      tbody.appendChild(tr)
+      const card = UIRenderer.generateCard(book)
+      cardSection.appendChild(card)
     })
+  }
+
+  static generateCard(book){
+    const card = document.createElement("article");
+    card.classList.add("card");
+
+    const readStatusBtn = document.createElement("button")
+    readStatusBtn.innerText = "Cambiar estatus de leído";
+    readStatusBtn.addEventListener("click", e => Book.prototype.changeReadStatus(e))
+    const editBtn = document.createElement("button")
+    editBtn.innerText = "Editar";
+    editBtn.addEventListener("click", e => {
+      UIRenderer.handleOpenModal(e);
+    })
+
+    const deleteBtn = document.createElement("button")
+    deleteBtn.innerText = "Eliminar";
+    deleteBtn.addEventListener("click", (e) => Book.prototype.delete(e))
+
+    card.setAttribute("data-book", formatBookID(book))
+    const bookTitle = document.createElement("h3")
+    const authorName = document.createElement("p")
+    const pagesNumber = document.createElement("p")
+    const isReadStatus = document.createElement("p")
+    const buttonSection = document.createElement("div")
+    buttonSection.classList.add("button-row")
+    isReadStatus.setAttribute("data-book", "isRead")
+    bookTitle.innerText = book.title;
+    authorName.innerText = book.author;
+    pagesNumber.innerText = book.pages;
+    isReadStatus.innerText = book.isRead ? "Leído ✅" : "No leído ❌"
+    card.appendChild(bookTitle)
+    card.appendChild(authorName)
+    card.appendChild(pagesNumber)
+    card.appendChild(isReadStatus)
+    card.appendChild(buttonSection)
+    buttonSection.appendChild(readStatusBtn)
+    buttonSection.appendChild(editBtn)
+    buttonSection.appendChild(deleteBtn)
+
+    return card;
   }
 
   static handleOpenModal(e) {
@@ -119,7 +134,7 @@ class UIRenderer {
   }
 
   static handleCloseModal(e) {
-    e.preventDefault
+    e.preventDefault();
     modal.close()
   }
 }
@@ -129,7 +144,7 @@ function formatBookID(book) {
   return book.title.split(" ").join("") + book.pages
 }
 
-UIRenderer.generateTable()
+UIRenderer.generateCardGrid()
 
 const openModalBtn = document.querySelector("#open-modal-btn")
 const addBookBtn = document.querySelector("#add-book-btn")
