@@ -1,7 +1,7 @@
 const data = [
   { title: "Narnia", author: "J Velazquez", pages: 300, isRead: false },
   { title: "Winnie", author: "Abraham", pages: 20, isRead: true },
-  { title: "Bob esponga", author: "Marco Suarez", pages: 4123, isRead: true },
+  { title: "Bob esponja", author: "Marco Suarez", pages: 4123, isRead: true },
   { title: "Libro Vaquero", author: "Juan Camaney", pages: 240, isRead: false },
   { title: "Como cautivar", author: " L Zavaleta", pages: 430, isRead: false },
 ];
@@ -36,7 +36,6 @@ class Book {
     const cardToEdit = document.querySelector(`article[data-book=${bookID}] p[data-book=isRead]`)
     cardToEdit.innerText = readStatus ? "Leído ✅" : "No leído ❌"
   }
-
 }
 
 class Library {
@@ -82,7 +81,7 @@ class UIRenderer {
     })
   }
 
-  static generateCard(book){
+  static generateCard(book) {
     const card = document.createElement("article");
     card.classList.add("card");
 
@@ -156,7 +155,6 @@ const closeModalBtn = document.querySelector("#close-modal-btn")
 
 openModalBtn.addEventListener("click", (e) => UIRenderer.handleOpenModal(e))
 form.addEventListener("submit", (e) => Library.addBookToLibrary(e))
-addBookBtn.addEventListener("click", (e) => UIRenderer.handleAddBookBtn())
 closeModalBtn.addEventListener("click", (e) => UIRenderer.handleCloseModal(e))
 
 

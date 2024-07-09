@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .flex {
   display: flex;
 }
@@ -9,15 +13,16 @@
 .flex-col {
   flex-direction: column;
 }
-.gap-2{
-  gap:.75rem
+
+.gap-2 {
+  gap: .75rem
 }
 
 dialog {
   min-width: 400px;
 }
 
-.display-none{
+.display-none {
   display: none;
 }
 
@@ -38,17 +43,9 @@ dialog {
   align-items: flex-start;
 }
 
-button{
-  border: none;
-  border-radius: 2px;
-  cursor: pointer;
-}
 
-button:hover{
-  background-color: rgb(215, 214, 214);
-}
 
-.button-row{
+.button-row {
   display: flex;
   gap: .25rem;
 }
