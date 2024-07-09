@@ -1,12 +1,4 @@
-const data = [
-  { title: "Narnia", author: "J Velazquez", pages: 300, isRead: false },
-  { title: "Winnie", author: "Abraham", pages: 20, isRead: true },
-  { title: "Bob esponja", author: "Marco Suarez", pages: 4123, isRead: true },
-  { title: "Libro Vaquero", author: "Juan Camaney", pages: 240, isRead: false },
-  { title: "Como cautivar", author: " L Zavaleta", pages: 430, isRead: false },
-];
-
-
+let data = JSON.parse(window.localStorage.getItem("books"))
 
 class Book {
   constructor(title, author, pages, isRead) {
@@ -58,7 +50,8 @@ class Library {
       const book = new Book(entries.title, entries.author, entries.pages, entries.isRead)
       Library.myLibrary.push(book)
       UIRenderer.generateCardGrid()
-
+      console.log(Library.myLibrary)
+      window.localStorage.setItem("books", JSON.stringify(Library.myLibrary))
     } else {
       console.log('Form is invalid. Please fill in all required fields.');
     }
